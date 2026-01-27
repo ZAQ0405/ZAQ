@@ -1,188 +1,618 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>众生千秋 - 资源分享</title>
-    <!-- 加载通用样式 -->
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- 使用媒体查询加载PC端样式 -->
-    <link rel="stylesheet" href="pc-styles.css" media="screen and (min-width: 768px)">
-    <!-- 使用媒体查询加载移动端样式 -->
-    <link rel="stylesheet" href="mobile-styles.css" media="screen and (max-width: 767px)">
-    <script src="jcript.js"></script>
-    <script src="mobile-script.js"></script>
+    <title>千秋聚合资源频道 - 你的数字资源分享空间</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0F172A;
+            --secondary: #3B82F6;
+            --accent: #F59E0B;
+            --bg: #FAFAFA;
+            --card-bg: #FFFFFF;
+            --text: #1E293B;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+            --shadow: rgba(15, 23, 42, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 头部导航 */
+        .header {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -0.02em;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        /* Hero 区域 */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* 主要CTA按钮 */
+        .primary-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--secondary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+        }
+
+        .primary-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        /* 主内容区 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        /* 最新文章区域 */
+        .articles-section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .update-badge {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .article-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .article-item {
+            padding: 1.2rem;
+            border-radius: 12px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .article-item:hover {
+            transform: translateX(4px);
+            border-color: var(--secondary);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .article-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .article-date {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        /* 侧边栏 */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .sidebar-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+
+        .sidebar-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* 社交媒体卡片 */
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border);
+        }
+
+        .social-link:hover {
+            transform: translateX(4px);
+            border-color: var(--secondary);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .wechat { background: linear-gradient(135deg, #09BB07, #07C160); }
+        .douyin { background: linear-gradient(135deg, #000000, #FE2C55); }
+        .bilibili { background: linear-gradient(135deg, #00A1D6, #FB7299); }
+
+        /* 快速访问卡片 */
+        .quick-access {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .access-btn {
+            display: block;
+            text-align: center;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--accent), #EF4444);
+            color: white;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+        }
+
+        .access-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-container {
+                padding: 1rem;
+            }
+        }
+
+        /* 页脚 */
+        .footer {
+            max-width: 1200px;
+            margin: 3rem auto 0;
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* 占位符状态 */
+        .placeholder {
+            padding: 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            background: var(--bg);
+            border-radius: 12px;
+            border: 2px dashed var(--border);
+        }
+
+        .placeholder-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
 </head>
 <body>
-    <div id="loading-screen">
-        <div class="loading-content">
-            <h1>众生千秋</h1>
-        </div>
-    </div>
-
-    <header>
-        <div class="header-content">
-            <h1>众生千秋</h1>
-            <nav>
-                <a href="#essential-websites"><i class="fas fa-globe"></i><span>网站导航</span></a> 
-                <a href="#essential-resources"><i class="fas fa-cube"></i><span>必备资源</span></a>
-                <a href="#recent-updates"><i class="fas fa-clock"></i><span>最近更新</span></a>
-                <a href="#qr-codes"><i class="fas fa-qrcode"></i><span>扫码关注</span></a>
-                <a href="#social-media"><i class="fas fa-share-alt"></i><span>社交媒体</span></a>
-            </nav>
+    <!-- 导航栏 -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">千秋<span>频道</span></div>
         </div>
     </header>
 
-    <main>
-        <section id="essential-websites">
-            <h3><i class="fas fa-globe"></i> 网站导航</h3>
-            <div class="websites-container">
-                <a href="https://www.agedm.org/" class="website-link" target="_blank">在线动漫</a>
-                <a href="https://github.com/" class="website-link" target="_blank">GitHub</a>
-                <a href="https://chatgpt.com/" class="website-link" target="_blank">ChatGPT</a>
-                <a href="https://www.ncat22.com" class="website-link" target="_blank">在线影视</a>
-                <a href="https://pan.qianfan.app/" class="website-link" target="_blank">千帆搜索</a>
-            </div>
-        </section>
+    <!-- Hero 区域 -->
+    <section class="hero">
+        <h1>欢迎来到千秋聚合资源频道</h1>
+        <p>精心整理的优质资源，持续更新中。一站式访问我的所有内容分享。</p>
+        <a href="#resources" class="primary-cta">
+            📦 访问资源表格
+        </a>
+    </section>
 
-        <section id="essential-resources">
-            <div class="resources-container">
-                <div class="resource-column" id="android-resources">
-                    <a href="https://caiyun.139.com/m/i?2h8KgjF22ybzr" class="resource-link">
-                        <div class="resource-icon">
-                            <i class="fas fa-mobile-alt fa-3x"></i>
-                        </div>
-                        <h4>安卓必备</h4>
-                    </a>
-                </div>
-                <div class="resource-column" id="pc-resources">
-                    <a href="https://caiyun.139.com/m/i?2h8KgwFW6Zxll" class="resource-link">
-                        <div class="resource-icon">
-                            <i class="fas fa-desktop fa-3x"></i>
-                        </div>
-                        <h5>电脑必备</h5>
-                    </a>
+    <!-- 主内容区 -->
+    <div class="container">
+        <!-- 左侧：最新文章 -->
+        <div class="articles-section">
+            <div class="section-header">
+                <h2 class="section-title">📝 最新文章</h2>
+                <span class="update-badge">最近更新</span>
+            </div>
+            
+            <div class="article-list" id="articleList">
+                <!-- 文章将从 articles.json 自动加载 -->
+                <div class="placeholder">
+                    <div class="placeholder-icon">📝</div>
+                    <div>正在加载文章...</div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <section id="recent-updates">
-            <h3><i class="fas fa-clock"></i> 最近更新</h3>
-            <div class="carousel-container">
-                <button class="carousel-button prev"><i class="fas fa-chevron-left"></i></button>
-                <div class="carousel">
-                    <div class="carousel-item">
-                        <a href="https://mp.weixin.qq.com/s?__biz=MzkwMjQ5NDUwNg==&mid=2247484349&idx=1&sn=9569fa726460ba1880f70d186a6343c1&chksm=c0a5e3f8f7d26aeea63af64c72e360344e89ef578ef02a487fb140333ad49651938bc1fe46c9#rd" target="_blank">
-                            <img src="images/zuijin/zuijin1.jpg" alt="最近更新1">
-                            <div class="carousel-caption">【特殊】魔法</div>
-                        </a>
-                    </div>
-                    <div class="carousel-item">
-                        <a href="https://mp.weixin.qq.com/s?__biz=MzkwMjQ5NDUwNg==&mid=2247484344&idx=1&sn=ac1398ae5f762f9a231ead36f9b8cf2f&chksm=c0a5e3fdf7d26aeb229daa8b847bb43b08e1798055a8c420a6c3d17657057ed18bf8764fba12#rd" target="_blank">
-                            <img src="images/zuijin/zuijin2.jpg" alt="最近更新2">
-                            <div class="carousel-caption">【安卓】ZA</div>
-                        </a>
-                    </div>
-                    <div class="carousel-item">
-                        <a href="https://mp.weixin.qq.com/s?__biz=MzkwMjQ5NDUwNg==&mid=2247484342&idx=1&sn=3f2bc9317e062323b2f14d39cbeb8949&chksm=c0a5e3f3f7d26ae5fdd982f16e91e0c5960836a4950dc970a3a7a7d544ab67e45becfdaedefe#rd" target="_blank">
-                            <img src="images/zuijin/zuijin3.jpg" alt="最近更新3">
-                            <div class="carousel-caption">【GAL】picacomic</div>
-                        </a>
-                    </div>
-                    <div class="carousel-item">
-                        <a href="https://mp.weixin.qq.com/s?__biz=MzkwMjQ5NDUwNg==&mid=2247484337&idx=1&sn=145c39e30ecd5b865b78f39432fe4bee&chksm=c0a5e3f4f7d26ae22b90ee82b222452a28182137e14ae4b398d4b2be31eafa4ad150fcbbcaa5#rd" target="_blank">
-                            <img src="images/zuijin/zuijin4.jpg" alt="最近更新4">
-                            <div class="carousel-caption">【电脑】xmind2024</div>
-                        </a>
-                    </div>
-                    <div class="carousel-item">
-                        <a href="https://mp.weixin.qq.com/s?__biz=MzkwMjQ5NDUwNg==&mid=2247484327&idx=1&sn=4774ada1d2b2c7a3b811406bc601a4cf&chksm=c0a5e3e2f7d26af4109fd729ebc02fcc57d13e8ceee79c2535e7ed3336dbe91c8ca6c03b4994#rd" target="_blank">
-                            <img src="images/zuijin/zuijin5.jpg" alt="最近更新5">
-                            <div class="carousel-caption">【安卓】AdGuard</div>
-                        </a>
-                    </div>
-                    <div class="carousel-item">
-                        <a href="https://mp.weixin.qq.com/s?__biz=MzkwMjQ5NDUwNg==&mid=2247484322&idx=1&sn=2104ac2a1560c0df3f37385a5637a541&chksm=c0a5e3e7f7d26af1abc148b995ce3bb88b5d845ba6ba06d312d07e136df3370561adb351422a#rd" target="_blank">
-                            <img src="images/zuijin/zuijin6.jpg" alt="最近更新6">
-                            <div class="carousel-caption">【安卓】motionleap</div>
-                        </a>
-                    </div>
-                    <div class="carousel-item">
-                        <a href="https://mp.weixin.qq.com/s?__biz=MzkwMjQ5NDUwNg==&mid=2247484316&idx=1&sn=f1884fbad9e91096e78ce3e72d642537&chksm=c0a5e3d9f7d26acff55d4589c476fb12a5110016fe483b0aefa3197cc74edd5ba1eb24d83888#rd" target="_blank">
-                            <img src="images/zuijin/zuijin7.jpg" alt="最近更新7">
-                            <div class="carousel-caption">【特殊】电脑一本通</div>
-                        </a>
-                    </div>
-                </div>
-                <button class="carousel-button next"><i class="fas fa-chevron-right"></i></button>
-            </div>
-        </section>
+        <!-- 右侧：社交媒体 + 快速访问 -->
+        <aside class="sidebar">
+            <!-- 社交媒体卡片 -->
+            <div class="sidebar-card">
+                <h3>🔗 关注我</h3>
+                <div class="social-links">
+                    <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzkwMjQ5NDUwNg==&scene=124#wechat_redirect" class="social-link" target="_blank">
+                        <div class="social-icon wechat">微</div>
+                        <div>
+                            <div style="font-weight: 600;">微信公众号</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted);">ACG软件库</div>
+                        </div>
+                    </a>
 
-        <section id="qr-codes">
-            <h3><i class="fas fa-qrcode"></i> 扫码关注</h3>
-            <div class="qr-codes-container">
-                <div class="qr-code-item">
-                    <img src="images/gongzhonghao.jpg" alt="公众号二维码">
-                    <div class="qr-code-caption">微信公众号</div>
-                </div>
-                <div class="qr-code-item">
-                    <img src="images/liaotianqunhao.jpg" alt="聊天群二维码">
-                    <div class="qr-code-caption">QQ聊天群</div>
-                </div>
-                <div class="qr-code-item">
-                    <img src="images/waiqunhao.jpg" alt="外群二维码">
-                    <div class="qr-code-caption">QQ外群</div>
-                </div>
-                <div class="qr-code-item">
-                    <img src="images/wentifankui.jpg" alt="问题反馈二维码">
-                    <div class="qr-code-caption">问题反馈</div>
-                </div>
-            </div>
-        </section>
+                    <a href="https://v.douyin.com/boXb5IDohMk/" class="social-link" target="_blank">
+                        <div class="social-icon douyin">抖</div>
+                        <div>
+                            <div style="font-weight: 600;">抖音</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted);">@无能の梦</div>
+                        </div>
+                    </a>
 
-        <section id="social-media">
-            <h3><i class="fas fa-share-alt"></i> 社交媒体</h3>
-            <div class="social-media-container">
-                <div class="social-media-item">
-                    <a href="https://v.douyin.com/ikpyEjWE/ 1@5.com :5pm" target="_blank">
-                        <div class="icon-wrapper">
-                            <img src="images/douyin-icon.png" alt="抖音">
+                    <a href="https://b23.tv/GPGJsnW" class="social-link" target="_blank">
+                        <div class="social-icon bilibili">B</div>
+                        <div>
+                            <div style="font-weight: 600;">哔哩哔哩</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted);">千秋课程分享</div>
                         </div>
-                        <div class="social-media-caption">抖音</div>
-                    </a>
-                </div>
-                <div class="social-media-item">
-                    <a href="https://v.kuaishou.com/XiQxwZ" target="_blank">
-                        <div class="icon-wrapper">
-                            <img src="images/kuaishou-icon.png" alt="快手">
-                        </div>
-                        <div class="social-media-caption">快手</div>
-                    </a>
-                </div>
-                <div class="social-media-item">
-                    <a href="https://www.xiaohongshu.com/user/profile/655f04290000000002035f1e?xhsshare=CopyLink&appuid=655f04290000000002035f1e&apptime=1727150003" target="_blank">
-                        <div class="icon-wrapper">
-                            <img src="images/xiaohongshu-icon.png" alt="小红书">
-                        </div>
-                        <div class="social-media-caption">小红书</div>
-                    </a>
-                </div>
-                <div class="social-media-item">
-                    <a href="https://b23.tv/eshJzVK" target="_blank">
-                        <div class="icon-wrapper">
-                            <img src="images/bilibili-icon.png" alt="B站">
-                        </div>
-                        <div class="social-media-caption">B站</div>
                     </a>
                 </div>
             </div>
-        </section>
-    </main>
 
-    <footer>
-        <p>&copy; 2024 众生千秋. 保留所有权利。</p>
-        <!-- 其他页脚内容 -->
+            <!-- 快速访问卡片 -->
+            <div class="sidebar-card">
+                <h3>⚡ 快速访问</h3>
+                <div class="quick-access">
+                    <a href="https://yun.139.com/shareweb/#/w/i/2sNZWrfmypbim" class="access-btn" id="resources" target="_blank">
+                        📊 资源总表格
+                    </a>
+                    <div style="margin-top: 0.5rem; text-align: center; font-size: 0.85rem; color: var(--text-muted);">
+                        💾 所有资源整理在这里
+                    </div>
+                </div>
+            </div>
+
+            <!-- 统计信息卡片 -->
+            <div class="sidebar-card">
+                <h3>📊 访问统计</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                    <div style="text-align: center; padding: 1rem; background: var(--bg); border-radius: 10px;">
+                        <div style="font-size: 1.8rem; font-weight: 700; color: var(--secondary);" id="weekVisits">--</div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem;">近7天访问</div>
+                    </div>
+                    <div style="text-align: center; padding: 1rem; background: var(--bg); border-radius: 10px;">
+                        <div style="font-size: 1.8rem; font-weight: 700; color: var(--accent);" id="todayVisits">--</div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.3rem;">今日访问</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <p>© 2025 千秋聚合资源频道 | 用心分享，持续更新</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">Powered by GitHub Pages</p>
     </footer>
+
+    <script>
+        // 访问统计功能
+        function initVisitCounter() {
+            // 使用不蒜子统计服务（免费、简单、可靠）
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = '//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js';
+            document.body.appendChild(script);
+            
+            // 等待不蒜子加载完成
+            script.onload = function() {
+                // 设置一个定时器来更新数据
+                const updateStats = () => {
+                    try {
+                        // 获取不蒜子的数据
+                        const sitePV = document.getElementById('busuanzi_value_site_pv');
+                        const siteUV = document.getElementById('busuanzi_value_site_uv');
+                        
+                        if (sitePV && siteUV) {
+                            // 更新今日访问（UV）
+                            document.getElementById('todayVisits').textContent = 
+                                siteUV.textContent || '--';
+                            
+                            // 更新近7天访问（PV）
+                            document.getElementById('weekVisits').textContent = 
+                                sitePV.textContent || '--';
+                        }
+                    } catch (e) {
+                        console.log('等待统计数据加载...');
+                    }
+                };
+                
+                // 每500ms检查一次，直到数据加载
+                const timer = setInterval(() => {
+                    updateStats();
+                    // 如果数据已加载，停止定时器
+                    if (document.getElementById('todayVisits').textContent !== '--') {
+                        clearInterval(timer);
+                    }
+                }, 500);
+                
+                // 10秒后停止尝试
+                setTimeout(() => clearInterval(timer), 10000);
+            };
+        }
+
+        // 备用文章数据（当 JSON 文件加载失败时使用）
+        const fallbackArticles = [
+            {
+                "title": "欢迎关注千秋聚合资源频道",
+                "url": "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzkwMjQ5NDUwNg==&scene=124#wechat_redirect",
+                "date": "2025-01-27",
+                "views": ""
+            },
+            {
+                "title": "更多精彩内容，请访问我的公众号",
+                "url": "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzkwMjQ5NDUwNg==&scene=124#wechat_redirect",
+                "date": "2025-01-27",
+                "views": ""
+            },
+            {
+                "title": "点击访问资源总表格",
+                "url": "https://yun.139.com/shareweb/#/w/i/2sNZWrfmypbim",
+                "date": "2025-01-27",
+                "views": ""
+            }
+        ];
+
+        // 渲染文章列表
+        function renderArticles(articles) {
+            const articleList = document.getElementById('articleList');
+            articleList.innerHTML = '';
+            
+            if (articles && articles.length > 0) {
+                articles.forEach((article, index) => {
+                    const articleItem = document.createElement('div');
+                    articleItem.className = 'article-item';
+                    articleItem.onclick = () => openArticle(article.url);
+                    
+                    articleItem.innerHTML = `
+                        <div class="article-title">${article.title}</div>
+                        <div class="article-meta">
+                            <span class="article-date">📅 ${article.date}</span>
+                            ${article.views && article.views !== 'N/A' && article.views !== '' ? `<span>👁️ ${article.views} 阅读</span>` : ''}
+                        </div>
+                    `;
+                    
+                    articleList.appendChild(articleItem);
+                });
+            } else {
+                articleList.innerHTML = `
+                    <div class="placeholder">
+                        <div class="placeholder-icon">📝</div>
+                        <div>暂无文章</div>
+                    </div>
+                `;
+            }
+        }
+
+        // 从 articles.json 加载文章
+        async function loadArticles() {
+            try {
+                // 尝试多个可能的路径
+                const paths = ['articles.json', './articles.json', '/articles.json'];
+                let data = null;
+                
+                for (const path of paths) {
+                    try {
+                        const response = await fetch(path);
+                        if (response.ok) {
+                            data = await response.json();
+                            console.log('✓ 成功从', path, '加载文章');
+                            break;
+                        }
+                    } catch (e) {
+                        continue;
+                    }
+                }
+                
+                if (data && data.articles) {
+                    renderArticles(data.articles);
+                } else {
+                    // 使用备用数据
+                    console.log('未找到 articles.json，使用备用数据');
+                    renderArticles(fallbackArticles);
+                }
+            } catch (error) {
+                console.error('加载文章失败:', error);
+                // 使用备用数据
+                renderArticles(fallbackArticles);
+            }
+        }
+
+        // 文章点击事件
+        function openArticle(url) {
+            window.open(url, '_blank');
+        }
+
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始化访问统计
+            initVisitCounter();
+            
+            // 加载文章
+            loadArticles();
+            
+            // 延迟动画，等待文章加载
+            setTimeout(() => {
+                const items = document.querySelectorAll('.article-item, .social-link, .sidebar-card');
+                items.forEach((item, index) => {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        item.style.transition = 'all 0.5s ease';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateY(0)';
+                    }, index * 50);
+                });
+            }, 100);
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        });
+    </script>
+    
+    <!-- 不蒜子统计（隐藏元素，仅用于获取数据） -->
+    <span id="busuanzi_container_site_pv" style="display:none;">
+        <span id="busuanzi_value_site_pv"></span>
+    </span>
+    <span id="busuanzi_container_site_uv" style="display:none;">
+        <span id="busuanzi_value_site_uv"></span>
+    </span>
 </body>
 </html>
