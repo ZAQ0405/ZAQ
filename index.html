@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>千秋聚合 · 社区</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+</head>
+<body>
+<div class="container">
+    <div class="top-bar">
+        <div class="logo-area">
+            <h1><i class="fas fa-cubes" style="color:#2e4b8f; margin-right: 8px;"></i>千秋聚合</h1>
+        </div>
+        <div class="welcome-tag">
+            <i class="fas fa-hand-peace"></i> 欢迎来到千秋聚合社区
+        </div>
+    </div>
+
+    <div class="nav-links">
+        <button class="nav-item active" data-page="page1"><i class="fas fa-layer-group"></i> 频道资源</button>
+        <button class="nav-item" data-page="page2"><i class="fas fa-grid-2"></i> 板块聚合</button>
+        <button class="nav-item" data-page="page3"><i class="fas fa-info-circle"></i> 关于千秋</button>
+        <button class="nav-item" data-page="page4"><i class="fas fa-users"></i> 关于我们</button>
+        <span style="flex:1; text-align:right; font-size:0.9rem;"><i class="far fa-bell"></i> 频道必看 · 防失联</span>
+    </div>
+
+    <div class="card" style="padding: 16px 22px;">
+        <div class="quick-actions">
+            <span class="label"><i class="fas fa-shield-alt"></i> 防失联关注微信公众号</span>
+            <div class="quick-item"><i class="fab fa-weixin"></i> 1、千秋聚合</div>
+            <div class="quick-item"><i class="fab fa-qq"></i> 2、点击加入QQ资源群</div>
+            <div class="quick-item"><i class="fab fa-tiktok"></i> 3、点击关注社区抖音</div>
+            <button class="btn-outline" id="downloadTableBtn" style="margin-left: auto;"><i class="fas fa-download"></i> 前往下载资源表格</button>
+        </div>
+    </div>
+
+    <div id="pageContainer" class="page-container"></div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

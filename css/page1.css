@@ -1,0 +1,73 @@
+.file-links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin: 16px 0 8px;
+}
+.file-link-item {
+    background: #eef2f6;
+    padding: 8px 18px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.file-link-item a {
+    text-decoration: none;
+    color: #2e4b8f;
+    font-weight: 500;
+}
+.text-muted {
+    color: #6b7f94;
+}
+.search-section {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 18px;
+    margin: 8px 0 4px;
+}
+.search-box {
+    display: flex;
+    align-items: center;
+    flex: 2 1 260px;
+    background: white;
+    border-radius: 48px;
+    border: 1.5px solid #d0d9e4;
+    padding: 4px 6px 4px 20px;
+}
+.search-box input {
+    flex: 1;
+    border: none;
+    padding: 12px 0;
+    font-size: 1rem;
+    background: transparent;
+    outline: none;
+}
+.search-box button {
+    background: #1e2b3c;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 10px 22px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.precise-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+.upload-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+#csvUpload {
+    display: none;
+}
+.status-text {
+    font-size: 0.9rem;
+    color: #2e4b8f;
+}

@@ -1,0 +1,47 @@
+<div class="card">
+    <div class="card-header">
+        <h2><i class="fas fa-book-open"></i> 频道必看 · 文档</h2>
+        <span class="badge">必读</span>
+    </div>
+    <div class="file-links">
+        <div class="file-link-item"><i class="fas fa-file-word"></i> 新人引导.docx <a href="#" target="_blank">在线阅读</a></div>
+        <div class="file-link-item"><i class="fas fa-file-word"></i> 资源获取说明.docx <a href="#" target="_blank">在线阅读</a></div>
+        <div class="file-link-item"><i class="fas fa-file-word"></i> 常见问题FAQ.docx <a href="#" target="_blank">在线阅读</a></div>
+    </div>
+    <p class="text-muted" style="margin-top:8px;"><i class="far fa-clock"></i> 请仔细阅读以上文档，了解社区规则与资源使用。</p>
+</div>
+
+<div class="search-section">
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="搜索名称、平台、类型...">
+        <button id="searchBtn"><i class="fas fa-search"></i> 点击搜索</button>
+    </div>
+    <div class="precise-check">
+        <input type="checkbox" id="precise"> 
+        <label for="precise"><i class="fas fa-bullseye"></i> 精准匹配名称</label>
+    </div>
+    <div class="upload-area">
+        <input type="file" id="csvUpload" accept=".csv,text/csv">
+        <button class="btn-outline" id="uploadCsvBtn"><i class="fas fa-upload"></i> 手动上传CSV</button>
+        <span id="dataStatus" class="status-text">就绪，请搜索或上传</span>
+    </div>
+</div>
+
+<div class="card" style="padding: 16px 0 8px 0;">
+    <div style="padding: 0 20px; display: flex; justify-content: space-between;">
+        <h3><i class="fas fa-table"></i> 资源索引 · 最新聚合</h3>
+        <span class="badge" id="rowCount">0 项</span>
+    </div>
+    <div class="table-wrapper">
+        <table id="resourceTable">
+            <thead>
+                <tr>
+                    <th>#</th><th>名称</th><th>平台</th><th>类型</th><th>下载链接</th><th>提取码</th><th>激活码</th><th>作弊码</th><th>礼包码</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <tr><td colspan="9" style="text-align:center; padding:30px;">输入关键词并点击搜索，或上传CSV文件以加载数据。</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
