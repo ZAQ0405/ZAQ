@@ -19,12 +19,22 @@
         });
     }
 
-    function loadJS(src) {
-        if (loadedAssets.js.has(src)) return Promise.resolve();
+    // 增加 forceReload 参数，强制重新加载 JS 文件
+    function loadJS(src, forceReload = false) {
+        if (!forceReload && loadedAssets.js.has(src)) {
+            return Promise.resolve();
+        }
+        // 如果需要强制重载，先删除缓存标记
+        if (forceReload) {
+            loadedAssets.js.delete(src);
+        }
         return new Promise((resolve, reject) => {
             const script = document.createElement('script');
             script.src = src;
-            script.onload = () => { loadedAssets.js.add(src); resolve(); };
+            script.onload = () => { 
+                loadedAssets.js.add(src); 
+                resolve(); 
+            };
             script.onerror = reject;
             document.body.appendChild(script);
         });
@@ -51,7 +61,10 @@
             pageContainer.innerHTML = html;
 
             await loadCSS(`css/${pageId}.css`);
-            await loadJS(`js/${pageId}.js`);
+
+            // ★ 关键修改：如果是 page1（频道资源），强制重新加载 JS
+            const isPage1 = (pageId === 'page1');
+            await loadJS(`js/${pageId}.js`, isPage1);
 
             if (typeof window[`init_${pageId}`] === 'function') {
                 window[`init_${pageId}`]();
